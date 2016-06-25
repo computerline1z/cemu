@@ -24,57 +24,36 @@ write assembly code, all of this for the following architectures:
   - `pygments` for the text colorization
 
 
-## Show Me ##
+## Show Me
 
-### Linux ###
+![demo](https://i.imgur.com/1vep3WM.png)
 
-![cemu-linux](https://i.imgur.com/1vep3WM.png)
+## Requirements
 
-### Windows ###
+### Automatically
 
-![cemu-win](http://i.imgur.com/rn183yR.png)
+Run the install script `./requirements.sh`.
 
-### OSX ###
+### Manually
+```bash
+# keystone
+$ git clone https://github.com/keystone-engine/keystone.git
+$ mkdir -p keystone/build && cd keystone/build
+$ cmake .. && make -j8
+$ sudo make install
+$ cd ../bindings/python && sudo make install # or sudo make install3 for Python3
 
-![cemu-osx](https://i.imgur.com/8tGqwE7.png)
+# capstone
+$ git clone https://github.com/aquynh/capstone.git
+$ mkdir -p capstone/build && cd capstone/build
+$ cmake .. && make -j8
+$ sudo make install
+$ cd ../bindings/python && sudo make install # or sudo make install3 for Python3
 
-
-## Requirements ##
-
-### Linux ###
-
-Use your distribution package manager to ensure that you have:
-
-  * `cmake`
-  * Python3 (prefered, but Python 2 works as well) + `pip3`
-  * a C compiler (gcc, clang, etc.)
-
-Then run the install script `./requirements.sh`.
-
-
-### OSX ###
-
-Use `brew` to install:
-
-  * `cmake`
-  * Python3 (`pip3` will be automatically installed)
-  * `pkg-config`
-  * `glib`
-
-Finally you can execute the script `./requirements.sh` that will install the
-rest of the requirements to run `cemu`.
-
-
-### Windows
-
-The fastest way for Windows is to install the packaged binaries for:
-   * Keystone
-     (http://www.keystone-engine.org/download/#python-module-for-windows-32---binaries-img-srcimagespythonpng-height28-width28-img-srcimageswindowspng-height28-width28)
-   * Capstone
-     (http://www.capstone-engine.org/download.html)
-   * Unicorn
-     (http://www.unicorn-engine.org/download/)
-
-Then spawn `cmd.exe` and install the missing Python packages: `python-qt5`,
-`pygments`). If you are running Python2, you will also need to install the
-package `enum34`.
+# unicorn
+$ git clone https://github.com/unicorn-engine/unicorn.git
+$ cd unicorn
+$ ./make.sh -j8
+$ sudo ./make.sh install
+$ cd ./bindings/python && sudo make install # or sudo make install3 for Python3
+```

@@ -1,29 +1,29 @@
 # -*- coding: utf-8 -*-
 
 import enum
-
-Architecture = enum.Enum('Architecture',
-                         "X86_16_INTEL " + \
-                         "X86_32_INTEL " + \
-                         "X86_64_INTEL " + \
-                         "X86_16_ATT " + \
-                         "X86_32_ATT " + \
-                         "X86_64_ATT " + \
-                         "ARM_LE " + \
-                         "ARM_BE " + \
-                         "ARM_THUMB_LE " + \
-                         "ARM_THUMB_BE " + \
-                         "ARM_AARCH64 " + \
-                         "MIPS " + \
-                         "MIPS_BE " + \
-                         "MIPS64 " + \
-                         "MIPS64_BE " + \
-                         "PPC " + \
-                         "PPC64 " + \
-                         "SPARC " + \
-                         "SPARC_BE " + \
-                         "SPARC64 " + \
-                         "SPARC64_BE" )
+from enum import Enum
+class Architecture(Enum):
+	X86_16_INTEL = 0
+	X86_32_INTEL = 1
+	X86_64_INTEL = 2
+	X86_16_ATT = 3
+	X86_32_ATT  = 4
+	X86_64_ATT = 5
+	ARM_LE = 6
+	ARM_BE = 7
+	ARM_THUMB_LE = 8
+	ARM_THUMB_BE = 9
+	ARM_AARCH64 = 10
+	MIPS = 11
+	MIPS_BE = 12
+	MIPS64 = 13
+	MIPS64_BE = 14
+	PPC = 15
+	PPC64 = 16
+	SPARC = 17
+	SPARC_BE = 18
+	SPARC64 = 19
+	SPARC64_BE = 20
 
 X86_GPR = ["AX", "BX", "CX", "DX", "SI", "DI", "IP", "BP", "SP"]
 X86_PGR = ["CS", "DS", "ES", "FS", "GS", "SS"]

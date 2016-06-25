@@ -145,10 +145,10 @@ def disassemble_file(fpath, mode):
     return disassemble(raw_data, mode)
 
 
-def assemble(asm_code, mode):
-    arch, mode, endian = get_arch_mode("keystone", mode)
+def assemble(asm_code, cmode):
+    arch, mode, endian = get_arch_mode("keystone", cmode)
     ks = keystone.Ks(arch, mode | endian)
-    if mode in (Architecture.X86_16_ATT, Architecture.X86_32_ATT, Architecture.X86_64_ATT):
+    if cmode in (Architecture.X86_16_ATT, Architecture.X86_32_ATT, Architecture.X86_64_ATT):
         ks.syntax = keystone.KS_OPT_SYNTAX_ATT
 
     try:

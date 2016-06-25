@@ -9,9 +9,18 @@ import binascii
 
 import unicorn
 
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+try:
+    #   For IDA 6.8 and older using PySide
+    from PyQt4 import QtGui, QtGui as QtWidgets, QtCore
+    from PyQt4.QtCore import Qt
+    from PyQt4.QtCore import QRegExp
+    from PyQt4.QtGui import QColor, QTextCharFormat, QFont, QSyntaxHighlighter, QWidget
+    from PyQt4.QtGui import *
+except ImportError:
+    #   For IDA 6.9 and newer using PyQt5
+    from PyQt5 import QtGui, QtWidgets, QtCore
+    from PyQt5.QtCore import Qt
+
 
 from pygments import highlight
 from pygments.lexers import *
@@ -25,9 +34,6 @@ from .utils import *
 WINDOW_SIZE = (1600, 800)
 ICON = os.path.dirname(os.path.realpath(__file__)) + "/icon.png"
 TITLE = "Cheap EMUlator"
-
-if sys.version_info.major == 3:
-    long = int
 
 
 class QFormatter(Formatter):
@@ -82,8 +88,8 @@ class Highlighter(QSyntaxHighlighter):
         cb = self.currentBlock()
         p = cb.position()
         text = self.document().toPlainText() +'\n'
-        highlight(text,self.lexer,self.formatter)
-        for i in range(len(text)):
+        highlight(str(text),self.lexer,self.formatter)
+        for i in range(len(str(text))):
             try:
                 self.setFormat(i,1,self.formatter.data[p+i])
             except IndexError:
@@ -219,7 +225,7 @@ class MemoryMappingWidget(QWidget):
         maps = []
         lines = self.editor.toPlainText().split("\n")
         for line in lines:
-            line = line.strip()
+            line = str(line).strip()
             if line.startswith("#"):
                 continue
 
@@ -318,7 +324,7 @@ class RegistersWidget(QWidget):
             else:
                 val = emu.get_register_value(reg)
             old_val = self.old_register_values.get(reg, 0)
-            if type(val) in (int, long):
+            if val.__class__.__name__ == "int":
                 value = format_address(val, current_mode)
             else:
                 value = str(val)
@@ -337,7 +343,7 @@ class RegistersWidget(QWidget):
         registers = current_mode.get_registers()
         for i, reg in enumerate(registers):
             name = self.values.item(i, 0).text()
-            value = self.values.item(i, 1).text()
+            value = str(self.values.item(i, 1).text())
             regs[name] = int(value, 16)
         return regs
 
@@ -382,7 +388,7 @@ class MemoryWidget(QWidget):
             self.editor.setText("VM not running")
             return
 
-        addr = self.address.text()
+        addr = str(self.address.text())
         if addr.startswith("0x") or addr.startswith("0X"):
             addr = addr[2:]
 
@@ -532,7 +538,7 @@ class EmulatorWindow(QMainWindow):
         self.setMainWindowProperty()
         self.setMainWindowMenuBar()
         self.setCentralWidget(self.canvas)
-        self.show()
+        self.showMaximized()
         return
 
 

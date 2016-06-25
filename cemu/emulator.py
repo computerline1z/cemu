@@ -50,26 +50,26 @@ class Emulator:
         if self.mode in (Architecture.X86_16_INTEL, Architecture.X86_16_ATT,
                          Architecture.X86_32_INTEL, Architecture.X86_32_ATT,
                          Architecture.X86_64_INTEL, Architecture.X86_64_ATT):
-            return getattr(unicorn.x86_const, "UC_X86_REG_%s"%reg.upper())
+            return getattr(unicorn.x86_const, "UC_X86_REG_%s"%str(reg).upper())
 
         if self.mode in (Architecture.ARM_LE, Architecture.ARM_BE,
                          Architecture.ARM_THUMB_LE, Architecture.ARM_THUMB_BE):
-            return getattr(unicorn.arm_const, "UC_ARM_REG_%s"%reg.upper())
+            return getattr(unicorn.arm_const, "UC_ARM_REG_%s"%str(reg).upper())
 
         if self.mode==Architecture.ARM_AARCH64:
-            return getattr(unicorn.arm64_const, "UC_ARM64_REG_%s"%reg.upper())
+            return getattr(unicorn.arm64_const, "UC_ARM64_REG_%s"%str(reg).upper())
 
         if self.mode in (Architecture.PPC, Architecture.PPC64):
-            return getattr(unicorn.ppc_const, "UC_PPC_REG_%s" % reg.upper())
+            return getattr(unicorn.ppc_const, "UC_PPC_REG_%s" % str(reg).upper())
 
         if self.mode in (Architecture.MIPS, Architecture.MIPS_BE,
                          Architecture.MIPS64, Architecture.MIPS64_BE):
-            return getattr(unicorn.mips_const, "UC_MIPS_REG_%s" % reg.upper())
+            return getattr(unicorn.mips_const, "UC_MIPS_REG_%s" % str(reg).upper())
 
         if self.mode in (Architecture.SPARC, Architecture.SPARC_BE, Architecture.SPARC64):
-            return getattr(unicorn.sparc_const, "UC_SPARC_REG_%s" %reg.upper())
+            return getattr(unicorn.sparc_const, "UC_SPARC_REG_%s" %str(reg).upper())
 
-        raise Exception("Cannot find register '%s' for arch '%s'" % (reg, self.mode))
+        raise Exception("Cannot find register '%s' for arch '%s'" % (str(reg), self.mode))
 
 
     def get_register_value(self, r):
